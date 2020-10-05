@@ -1,0 +1,18 @@
+.Column {
+  border-radius: 8px;
+  background-color: white;
+}
+
+.ColumnTitle {
+  height: 3rem;
+  border-radius: 8px 8px 0 0;
+  padding: 0.8rem;
+}
+
+.ColumnContent {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 3rem);
+  overflow-y: auto;
+  padding: 1rem;
+}

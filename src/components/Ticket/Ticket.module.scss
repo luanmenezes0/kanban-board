@@ -1,0 +1,35 @@
+.Ticket {
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem;
+  border: solid 1px #e5e5e5;
+  background-color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.Tag {
+  color: red;
+  border-radius: 10px;
+}
+
+.TicketId {
+  color: #141414;
+  font-weight: 500;
+  margin-top: 0.8rem;
+}
+
+.TicketAssignee {
+  color: #1f1f49;
+  font-size: 0.75rem;
+}
+
+.Actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.Popover {
+  display: flex;
+  flex-direction: column;
+}
