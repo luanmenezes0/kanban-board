@@ -3,29 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 export const ticketsSlice = createSlice({
   name: 'tickets',
   initialState: {
-    tasks: {},
-    columns: {
-      'col-1': {
-        id: 'column-1',
-        title: 'To do',
-        taskIds: ['task-1', 'task-2', 'task-3', 'task-4'],
-      },
-      'col-2': {
-        id: 'column-2',
-        title: 'In progress',
-        taskIds: [],
-      },
-      'col-3': {
-        id: 'column-3',
-        title: 'Done',
-        taskIds: [],
-      },
-      'col-4': {
-        id: 'column-3',
-        title: 'Done',
-        taskIds: [],
-      },
-    },
     tickets: [],
     modalIsVisible: false,
     edition: {

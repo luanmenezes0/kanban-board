@@ -10,7 +10,6 @@ import {
   editTicket,
   resetEdition,
 } from '../../store/ticketsSlice';
-import styles from './Modal.module.scss';
 
 const { ticketTypes, ticketAssignees } = {
   ticketTypes: ['Bem', 'Predial', 'Procedimento'],
