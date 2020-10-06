@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { getTickets, moveColumn, moveTicket } from '../../store/ticketsSlice';
+import { getTickets, moveColumn } from '../../store/ticketsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Column from '../Column/Column';
 import styles from './Dashboard.module.scss';
@@ -51,13 +51,7 @@ const Dashboard = () => {
     const columnfinish = destination.droppableId;
 
     if (columnStart === columnfinish) {
-      return dispatch(
-        moveTicket({
-          oldIndex: source.index,
-          newIndex: destination.index,
-          ticketId: draggableId,
-        })
-      );
+      return;
     }
 
     dispatch(
@@ -77,7 +71,7 @@ const Dashboard = () => {
             ? tickets.filter((t) => t.status === column.statusId)
             : null;
 
-          const isDropDisabled = homeIndex <= index;
+          const isDropDisabled = index === homeIndex + 1;
           return (
             <Column
               title={column.title}
