@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { getTickets, moveColumn, moveTicket } from '../../store/ticketsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Column from '../Column/Column';
 import styles from './Dashboard.module.scss';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { message } from 'antd';
 
 const Dashboard = () => {
   const columns = [
@@ -21,8 +22,19 @@ const Dashboard = () => {
 
   const tickets = useSelector((state) => state.tickets.tickets);
 
+  const [homeIndex, setHomeIndex] = useState(null);
+
+  const onDragStart = (start) => {
+    const colIndex = columns.findIndex(
+      (c) => c.statusId === start.source.droppableId
+    );
+    setHomeIndex(colIndex);
+  };
+
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
+
+    setHomeIndex(null);
 
     if (!destination) {
       return;
@@ -39,33 +51,33 @@ const Dashboard = () => {
     const columnfinish = destination.droppableId;
 
     if (columnStart === columnfinish) {
-      dispatch(
+      return dispatch(
         moveTicket({
           oldIndex: source.index,
           newIndex: destination.index,
           ticketId: draggableId,
         })
       );
-      dispatch(getTickets());
     }
 
-    /* dispatch(
+    dispatch(
       moveColumn({
         ticketId: draggableId,
         newStatus: destination.droppableId,
       })
     );
-    dispatch(getTickets()); */
-    console.log(result);
+    message.info('Ticket atualizado');
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <main className={styles.Container}>
-        {columns.map((column) => {
+        {columns.map((column, index) => {
           const ticketList = tickets
             ? tickets.filter((t) => t.status === column.statusId)
             : null;
+
+          const isDropDisabled = homeIndex <= index;
           return (
             <Column
               title={column.title}
@@ -73,6 +85,7 @@ const Dashboard = () => {
               color={column.color}
               tickets={ticketList}
               key={column.statusId}
+              isDropDisabled={!isDropDisabled}
             />
           );
         })}

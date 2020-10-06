@@ -3,10 +3,50 @@ import { createSlice } from '@reduxjs/toolkit';
 export const ticketsSlice = createSlice({
   name: 'tickets',
   initialState: {
+    tasks: {},
+    columns: {
+      'col-1': {
+        id: 'column-1',
+        title: 'To do',
+        taskIds: ['task-1', 'task-2', 'task-3', 'task-4'],
+      },
+      'col-2': {
+        id: 'column-2',
+        title: 'In progress',
+        taskIds: [],
+      },
+      'col-3': {
+        id: 'column-3',
+        title: 'Done',
+        taskIds: [],
+      },
+      'col-4': {
+        id: 'column-3',
+        title: 'Done',
+        taskIds: [],
+      },
+    },
     tickets: [],
-    showModal: false,
+    modalIsVisible: false,
+    edition: {
+      editMode: false,
+      ticket: null,
+    },
   },
   reducers: {
+    showModal: (state, action) => {
+      state.modalIsVisible = action.payload;
+    },
+
+    setEdition: (state, action) => {
+      state.edition.editMode = true;
+      state.edition.ticket = action.payload;
+    },
+
+    resetEdition: (state, action) => {
+      state.edition.editMode = false;
+    },
+
     getTickets: (state) => {
       state.tickets = JSON.parse(localStorage.getItem('tickets'));
     },
@@ -18,40 +58,65 @@ export const ticketsSlice = createSlice({
       }
       tickets.push(action.payload);
       localStorage.setItem('tickets', JSON.stringify(tickets));
+      state.tickets = tickets;
+    },
+
+    editTicket: (state, action) => {
+      const { id, form } = action.payload;
+
+      const tickets = JSON.parse(localStorage.getItem('tickets'));
+      let [ticket] = tickets.filter((t) => t.id === id);
+      ticket = { ...ticket, ...form };
+
+      const newTickets = tickets.filter((t) => t.id !== id);
+      newTickets.push(ticket);
+
+      localStorage.setItem('tickets', JSON.stringify(newTickets));
+      state.tickets = newTickets;
+    },
+
+    deleteTicket: (state, action) => {
+      const { ticketId } = action.payload;
+      const tickets = JSON.parse(localStorage.getItem('tickets'));
+      const newTickets = tickets.filter((t) => t.id !== ticketId);
+
+      localStorage.setItem('tickets', JSON.stringify(newTickets));
+      state.tickets = newTickets;
     },
 
     moveTicket: (state, action) => {
-      const tickets = JSON.parse(localStorage.getItem('tickets'));
-
       const { oldIndex, newIndex, ticketId } = action.payload;
 
+      const tickets = JSON.parse(localStorage.getItem('tickets'));
       const ticket = tickets.filter((t) => t.id === ticketId);
-      
+
       tickets.splice(oldIndex, 1);
       tickets.splice(newIndex, 0, ticket[0]);
 
       localStorage.setItem('tickets', JSON.stringify(tickets));
+      state.tickets = tickets;
     },
 
     moveColumn: (state, action) => {
       const { ticketId, newStatus } = action.payload;
 
       const tickets = JSON.parse(localStorage.getItem('tickets'));
-      const [ticket] = tickets.filter((t) => t.id === ticketId);
-      ticket.id = newStatus;
+      const ticket = tickets.find((t) => t.id === ticketId);
+      ticket.status = newStatus;
 
-      tickets.push(ticket);
       localStorage.setItem('tickets', JSON.stringify(tickets));
-    },
-    deleteTicket: (state, action) => {
-      state.value += action.payload;
+      state.tickets = tickets;
     },
   },
 });
 
 export const {
+  showModal,
   getTickets,
   createTicket,
+  setEdition,
+  resetEdition,
+  editTicket,
   deleteTicket,
   moveTicket,
   moveColumn,

@@ -7,18 +7,27 @@
   margin-bottom: 0.5rem;
 }
 
+.Image {
+  margin-top: 0.8rem;
+  width: 100%;
+
+  img {
+    width: 100%;
+  }
+}
+
 .Tag {
   color: red;
   border-radius: 10px;
 }
 
-.TicketId {
+.Id {
   color: #141414;
   font-weight: 500;
   margin-top: 0.8rem;
 }
 
-.TicketAssignee {
+.Assignee {
   color: #1f1f49;
   font-size: 0.75rem;
 }

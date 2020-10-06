@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
+import { showModal } from '../../store/ticketsSlice';
 import styles from './Header.module.scss';
 import Logo from '../../assets/logo.png';
-import TicketCreation from '../../containers/Modal/TicketCreation';
+import Modal from '../../containers/Modal/Modal';
+import { useDispatch } from 'react-redux';
 
 const Header = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const dispatch = useDispatch();
+
   return (
     <header className={styles.Header}>
       <div>
@@ -18,11 +21,11 @@ const Header = () => {
         size='large'
         shape='round'
         icon={<PlusOutlined />}
-        onClick={() => setIsVisible(true)}
+        onClick={() => dispatch(showModal(true))}
       >
         Novo ticket
       </Button>
-      <TicketCreation open={isVisible} show={setIsVisible} />
+      <Modal />
     </header>
   );
 };
