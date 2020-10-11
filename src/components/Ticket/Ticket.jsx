@@ -39,10 +39,10 @@ const Ticket = (props) => {
 
   const popoverContent = (
     <div className={styles.Popover}>
-      <Button onClick={editTicket} type='text'>
+      <Button onClick={editTicket} type="text">
         <Text strong>Editar</Text>
       </Button>
-      <Button onClick={showDeleteConfirm} type='text'>
+      <Button onClick={showDeleteConfirm} type="text">
         <Text strong>Excluir</Text>
       </Button>
     </div>
@@ -60,7 +60,7 @@ const Ticket = (props) => {
           <span>
             <Tag
               style={{ borderRadius: '10px', color: '#1F1F49' }}
-              color='#CAD1EB'
+              color="#CAD1EB"
             >
               {ticket.type}
             </Tag>
@@ -68,15 +68,15 @@ const Ticket = (props) => {
 
           <span className={styles.Image}>
             {ticket.image ? (
-              <img src={ticket.image} alt='ticket.description' />
+              <img src={ticket.image} alt="ticket.description" />
             ) : null}
           </span>
           <span className={styles.Id}>{ticket.id.slice(8, 12)}</span>
           <p>{ticket.description}</p>
           <span className={styles.Actions}>
             <p className={styles.Assignee}>{ticket.assignee}</p>
-            <Popover placement='rightBottom' content={popoverContent}>
-              <Button type='text' icon={<EllipsisOutlined />}></Button>
+            <Popover placement="rightBottom" content={popoverContent}>
+              <Button type="text" icon={<EllipsisOutlined />} />
             </Popover>
           </span>
         </div>

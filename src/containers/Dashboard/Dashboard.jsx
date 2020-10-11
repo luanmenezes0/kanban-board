@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-
-import { getTickets, moveColumn } from '../../store/ticketsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import Column from '../Column/Column';
-import styles from './Dashboard.module.scss';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { message } from 'antd';
+
+import { getTickets, moveColumn } from '../../store/ticketsSlice';
+import Column from '../Column/Column';
+import styles from './Dashboard.module.scss';
 
 const Dashboard = () => {
   const columns = [
