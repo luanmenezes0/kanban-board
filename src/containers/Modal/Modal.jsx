@@ -21,7 +21,7 @@ const { ticketTypes, ticketAssignees } = {
   ],
 };
 
-const Modal = (props) => {
+const Modal = () => {
   const dispatch = useDispatch();
 
   const modalIsVisible = useSelector((state) => state.tickets.modalIsVisible);
@@ -46,7 +46,11 @@ const Modal = (props) => {
 
   const successMessage = () => {
     let action = '';
-    editMode ? (action = 'editado') : (action = 'criado');
+    if (editMode) {
+      action = 'editado';
+    } else {
+      action = 'criado';
+    }
     message.success(`Ticket ${action} com sucesso`);
   };
 
@@ -97,7 +101,7 @@ const Modal = (props) => {
     multiple: false,
     accept: 'image/*',
     customRequest(info) {
-      const file = info.file;
+      const { file } = info;
       const getBase64 = (file) => {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
@@ -125,20 +129,20 @@ const Modal = (props) => {
         onCancel={cancelHandler}
         style={{ top: '2rem' }}
         footer={[
-          <Button key='back' shape='round' onClick={cancelHandler}>
+          <Button key="back" shape="round" onClick={cancelHandler}>
             Cancelar
           </Button>,
           <Button
             onClick={ticketFormHandler}
-            key='submit'
-            shape='round'
-            type='primary'
+            key="submit"
+            shape="round"
+            type="primary"
           >
             {editMode ? 'Editar Ticket' : 'Criar Ticket'}
           </Button>,
         ]}
       >
-        <Form>
+        <Form data-testid="form">
           <Form.Item
             labelCol={{ span: '24' }}
             required
@@ -184,10 +188,10 @@ const Modal = (props) => {
             label={<span style={labelstyle}>Imagem</span>}
           >
             <Dragger {...draggerProps}>
-              <p className='ant-upload-drag-icon'>
+              <p className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>
-              <p className='ant-upload-text'>
+              <p className="ant-upload-text">
                 Arraste uma imagem para adicionar ao ticket
               </p>
             </Dragger>
