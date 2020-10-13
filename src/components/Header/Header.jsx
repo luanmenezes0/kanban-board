@@ -1,31 +1,33 @@
 import React from 'react';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
 
 import { showModal } from '../../store/ticketsSlice';
-import styles from './Header.module.scss';
 import Logo from '../../assets/logo.png';
-import Modal from '../../containers/Modal/Modal';
-import { useDispatch } from 'react-redux';
+import styles from './Header.module.scss';
 
 const Header = () => {
   const dispatch = useDispatch();
 
+  const handleClick = () => {
+    dispatch(showModal(true));
+  };
+
   return (
     <header className={styles.Header}>
       <div>
-        <img src={Logo} alt='logo' />
+        <img src={Logo} alt="logo" />
       </div>
       <Button
-        type='primary'
-        size='large'
-        shape='round'
+        type="primary"
+        size="large"
+        shape="round"
         icon={<PlusOutlined />}
-        onClick={() => dispatch(showModal(true))}
+        onClick={handleClick}
       >
         Novo ticket
       </Button>
-      <Modal />
     </header>
   );
 };
