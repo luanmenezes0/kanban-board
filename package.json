@@ -6,8 +6,6 @@
     "@ant-design/icons": "^4.2.2",
     "@craco/craco": "^5.7.0",
     "@reduxjs/toolkit": "^1.4.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
     "antd": "^4.6.6",
     "craco-less": "^1.17.0",
     "node-sass": "^4.14.1",
@@ -40,6 +38,8 @@
   },
   "devDependencies": {
     "@testing-library/dom": "^7.24.5",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.12.0",

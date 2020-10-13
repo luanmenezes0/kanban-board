@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Tag, Popover, Modal, Typography, message } from 'antd';
 import { EllipsisOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Draggable } from 'react-beautiful-dnd';
@@ -8,13 +8,14 @@ import { Draggable } from 'react-beautiful-dnd';
 import { deleteTicket, setEdition, showModal } from '../../store/ticketsSlice';
 import styles from './Ticket.module.scss';
 
-const Ticket = ({ ticket, index }) => {
+const Ticket = ({ taskId, index }) => {
   const { confirm } = Modal;
   const { Text } = Typography;
   const dispatch = useDispatch();
+  const task = useSelector((state) => state.tickets.tasks[taskId]);
 
   const editTicket = () => {
-    dispatch(setEdition(ticket));
+    dispatch(setEdition({ id: taskId, task }));
     dispatch(showModal(true));
   };
 
@@ -30,7 +31,7 @@ const Ticket = ({ ticket, index }) => {
       okType: 'danger',
       cancelText: 'Não',
       onOk() {
-        dispatch(deleteTicket({ ticketId: ticket.id }));
+        dispatch(deleteTicket({ taskId }));
         successMessage();
       },
     });
@@ -48,7 +49,7 @@ const Ticket = ({ ticket, index }) => {
   );
 
   return (
-    <Draggable draggableId={ticket.id} index={index}>
+    <Draggable draggableId={taskId} index={index}>
       {(provided) => (
         <div
           className={styles.Ticket}
@@ -62,19 +63,19 @@ const Ticket = ({ ticket, index }) => {
               style={{ borderRadius: '10px', color: '#1F1F49' }}
               color="#CAD1EB"
             >
-              {ticket.type}
+              {task.type}
             </Tag>
           </span>
 
           <span className={styles.Image}>
-            {ticket.image ? (
-              <img src={ticket.image} alt="ticket.description" />
+            {task.image ? (
+              <img src={task.image} alt="task.description" />
             ) : null}
           </span>
-          <span className={styles.Id}>{ticket.id.slice(8, 12)}</span>
-          <p>{ticket.description}</p>
+          <span className={styles.Id}>{taskId}</span>
+          <p>{task.description}</p>
           <span className={styles.Actions}>
-            <p className={styles.Assignee}>{ticket.assignee}</p>
+            <p className={styles.Assignee}>{task.assignee}</p>
             <Popover placement="rightBottom" content={popoverContent}>
               <Button
                 aria-label="open"
@@ -90,14 +91,7 @@ const Ticket = ({ ticket, index }) => {
 };
 
 Ticket.propTypes = {
-  ticket: PropTypes.shape({
-    assignee: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    image: PropTypes.string,
-  }).isRequired,
+  taskId: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
 };
 

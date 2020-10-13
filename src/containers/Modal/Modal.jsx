@@ -72,14 +72,9 @@ const Modal = () => {
   const ticketFormHandler = () => {
     if (!editMode) {
       if (form.description !== '' && form.assignee !== '' && form.type !== '') {
-        const ticket = {
-          id: new Date().getTime().toString(),
-          status: '1',
-          ...form,
-        };
-        dispatch(createTicket(ticket));
+        dispatch(createTicket({ form }));
       } else {
-        return message.warning('preencha todos os campos necessários');
+        return message.warning('Preencha todos os campos necessários!');
       }
     } else {
       dispatch(editTicket({ id: ticketToEdit.id, form }));
@@ -187,6 +182,7 @@ const Modal = () => {
             labelCol={{ span: '24' }}
             label={<span style={labelstyle}>Imagem</span>}
           >
+            {/* eslint-disable react/jsx-props-no-spreading */}
             <Dragger {...draggerProps}>
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
