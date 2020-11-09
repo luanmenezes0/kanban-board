@@ -4,7 +4,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 
 import { showModal } from '../../store/ticketsSlice';
-import Logo from '../../assets/logo.png';
 import styles from './Header.module.scss';
 
 const Header = () => {
@@ -16,8 +15,8 @@ const Header = () => {
 
   return (
     <header className={styles.Header}>
-      <div>
-        <img src={Logo} alt="logo" />
+      <div className={styles.appTitle}>
+        Kanban
       </div>
       <Button
         type="primary"
